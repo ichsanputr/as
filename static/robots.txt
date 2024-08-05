@@ -1,0 +1,22 @@
+# robots.txt for https://desamedalsari.com
+
+# Izinkan semua bot mengakses semua konten kecuali yang dinyatakan di bawah
+User-agent: *
+Disallow: /admin/
+Disallow: /private/
+Disallow: /temp/
+Disallow: /cgi-bin/
+Disallow: /auth/login
+Disallow: /dashboard
+
+# Lokasi sitemap XML
+Sitemap: https://desamedalsari.com/sitemap.xml
+
+# Berikan instruksi khusus untuk bot tertentu jika diperlukan
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Disallow: /private/
+
+# Akhiri dengan catatan penting atau instruksi tambahan jika perlu
