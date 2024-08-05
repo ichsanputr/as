@@ -22,7 +22,7 @@ async function changePage() {
     const { data } = await $fetch(`/api/kegiatan?limit=5&page=${page.value}`)
 
     news.value = data
-    
+
     if (navigator.userAgent.includes("Chrome")) {
         window.scrollTo({ behavior: "smooth", top: 0, left: 0 })
         return
@@ -53,8 +53,8 @@ async function changePage() {
                             <span class="line-clamp-2">{{ news.title }}</span>
                         </div>
                         <div class="text-xs md:text-base block md:flex items-center font-medium mt-2">
-                                  <IconsDate class="flex-none" />
-                            <span class="ml-1 mr-2">{{ moment(news.created_at).format("LL") }}</span>
+                            <IconsDate class="flex-none" />
+                            <span class="ml-1 mr-2">{{ news.date }}</span>
                         </div>
                         <div class="mt-2 text-sm md:text-base">
                             <span class="line-clamp-2 sm:line-clamp-3">{{ news.description }}</span>

@@ -1,10 +1,9 @@
 <script setup>
-import moment from 'moment';
-
 const route = useRouter().currentRoute.value
 const post = reactive({
     title: null,
     content: null,
+    date: null,
     created_at: null,
 })
 
@@ -12,6 +11,7 @@ const data = await $fetch('/api/kegiatan/slug/' + route.params.id)
 
 post.title = data.title
 post.content = data.content
+post.date = data.date
 post.created_at = data.created_at
 
 definePageMeta({
@@ -35,7 +35,7 @@ definePageMeta({
                 </div>
                 <div class="text-md flex items-center font-medium mt-2 mb-4">
                     <IconsDate />
-                    <span class="ml-1">{{ moment(post.created_at).format("LL") }}</span>
+                    <span class="ml-1">{{ post.date }}</span>
                 </div>
                 <div class="quill-content" v-html="post.content"></div>
             </div>

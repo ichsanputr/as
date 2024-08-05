@@ -18,8 +18,8 @@ activities.value = (await $fetch('/api/kegiatan?limit=5')).data
                 <div class="text-[#0088CC] text-base font-medium">
                     <span class="line-clamp-2">{{ activity.title }}</span>
                 </div>
-                <div class="mt-1">
-                    <span>{{ moment(activity.created_at).format("LL") }}</span>
+                <div class="mt-1 font-medium">
+                    <span>{{ activity.date }}</span>
                 </div>
             </div>
         </div>
