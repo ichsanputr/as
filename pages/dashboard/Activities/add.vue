@@ -16,6 +16,7 @@ export default {
             form: {
                 title: null,
                 description: null,
+                date: null,
                 content: null,
                 thumbnail: null,
             },
@@ -84,6 +85,10 @@ export default {
                         <div class="col-span-1">
                             <v-text-field :rules="[v => !!v || 'Field is required']" v-model="form.title"
                                 variant="outlined" hide-details="auto" label="Judul Kegiatan"></v-text-field>
+                        </div>
+                        <div class="col-span-1 mt-3">
+                            <v-text-field :rules="[v => !!v || 'Field is required']" placeholder="24 Mei 2025" v-model="form.date"
+                                variant="outlined" hide-details="auto" label="Tanggal Kegiatan"></v-text-field>
                         </div>
                         <div class="mt-3">
                             <v-textarea :rules="[v => !!v || 'Field is required']" rows="3" variant="outlined"

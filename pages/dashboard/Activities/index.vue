@@ -21,6 +21,7 @@ export default {
                 { title: 'Title', align: 'start', sortable: false, key: 'title', width: "300px" },
                 { title: 'Description', align: 'start', sortable: false, key: 'description', width: "300px" },
                 { title: 'Thumbnail', align: 'start', key: 'thumbnail' },
+                { title: 'Tanggal', align: 'start', key: 'date' },
                 { title: 'Content', align: 'end', key: 'content' },
                 { title: 'Actions', align: 'center', key: 'actions', sortable: false },
             ],
