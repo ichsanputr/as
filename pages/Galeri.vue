@@ -153,7 +153,7 @@ useHead({
     </div>
 </template>
 
-<style scoped>
+<style>
 ::v-deep img {
     border-radius: 6px 0 0 0;
     width: 100%;
