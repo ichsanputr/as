@@ -141,7 +141,7 @@ useHead({
             <div id="gallery" class="grid grid-cols-1 md:grid-cols-3 gap-[2rem] md:gap-y-[2rem]">
                 <a class="w-full cursor-pointer rounded-lg" v-for="(image, key) in images" :key="key" :href="image.url"
                     data-pswp-width="600" data-pswp-height="400" target="_blank" rel="noreferrer">
-                    <v-img :lazy-src="image.url" class="w-full rounded-t-lg" height="300" :src="image.url" alt="" />
+                    <v-img :lazy-src="image.url" class="w-full rounded-t-lg" :src="image.url" alt="" />
                     <div class="hidden-caption-content">{{ image.description }}</div>
                     <div
                         class="rounded-b-lg py-3 px-2 font-medium text-base md:text-lg backdrop-blur-sm bg-white/30 shadow-sm border border-slate-100">
