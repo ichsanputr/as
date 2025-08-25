@@ -37,6 +37,7 @@
           <tr>
             <th class="px-4 py-2">Date</th>
             <th class="px-4 py-2">Profit</th>
+            <th class="px-4 py-2">Action</th>
           </tr>
         </thead>
         <tbody id="reportBody"></tbody>
@@ -76,6 +77,13 @@
       loadData();
     }
 
+    function removeProfit(index) {
+      let data = JSON.parse(localStorage.getItem("profits")) || [];
+      data.splice(index, 1); // remove item at index
+      localStorage.setItem("profits", JSON.stringify(data));
+      loadData();
+    }
+
     function loadData() {
       const reportBody = document.getElementById("reportBody");
       const totalProfitEl = document.getElementById("totalProfit");
@@ -85,9 +93,19 @@
       let data = JSON.parse(localStorage.getItem("profits")) || [];
 
       let totalProfit = 0;
-      data.forEach(item => {
+      data.forEach((item, index) => {
         totalProfit += item.profit;
-        let row = `<tr class='border-t text-center'><td class='px-4 py-2'>${item.date}</td><td class='px-4 py-2'>$${item.profit.toFixed(2)}</td></tr>`;
+        let row = `
+          <tr class='border-t text-center'>
+            <td class='px-4 py-2'>${item.date}</td>
+            <td class='px-4 py-2'>$${item.profit.toFixed(2)}</td>
+            <td class='px-4 py-2'>
+              <button onclick="removeProfit(${index})"
+                class="px-3 py-1 bg-red-500 text-white rounded-lg shadow hover:bg-red-600">
+                Remove
+              </button>
+            </td>
+          </tr>`;
         reportBody.innerHTML += row;
       });
 
