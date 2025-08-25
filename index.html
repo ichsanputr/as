@@ -2,43 +2,98 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>4 Live Videos Full Screen</title>
+  <title>Profit Tracker</title>
+  <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    html, body {
-      width: 100%;
-      height: 100%;
-      background-color: #000;
-      overflow: hidden;
-    }
-
-    .video-grid {
-      display: grid;
-      grid-template-columns: 50% 50%;
-      grid-template-rows: 50% 50%;
-      width: 100vw;
-      height: 100vh;
-    }
-
-    iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
-    }
+    body { font-family: 'Inter', sans-serif; }
   </style>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
-<body>
-  <div class="video-grid">
-    <iframe src="https://www.youtube.com/embed/DsZjZ3newD8?autoplay=1&mute=1&controls=0&modestbranding=1&rel=0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-    <iframe src="https://www.youtube.com/embed/yBc0H48-qeU?autoplay=1&mute=1&controls=0&modestbranding=1&rel=0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-    <iframe src="https://www.youtube.com/embed/PM5XClNXFQA?autoplay=1&mute=1&controls=0&modestbranding=1&rel=0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-    <iframe src="https://www.youtube.com/embed/jH1ssJTLxbQ?autoplay=1&mute=1&controls=0&modestbranding=1&rel=0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+<body class="bg-gray-50 min-h-screen p-6">
+  <div class="max-w-3xl mx-auto">
+    <h2 class="text-2xl font-bold mb-4 text-gray-800">Profit Tracker</h2>
+
+    <div class="flex gap-2 mb-4">
+      <input type="number" id="profitInput" placeholder="Enter profit" step="0.01"
+        class="flex-1 px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+      <button onclick="addProfit()"
+        class="px-4 py-2 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700">Add Profit</button>
+    </div>
+
+    <div class="grid grid-cols-2 gap-4 mb-6">
+      <div class="p-4 bg-white rounded-2xl shadow text-center">
+        <h3 class="text-lg font-semibold text-gray-600">Total Profit</h3>
+        <p id="totalProfit" class="text-2xl font-bold text-green-600">$0.00</p>
+      </div>
+      <div class="p-4 bg-white rounded-2xl shadow text-center">
+        <h3 class="text-lg font-semibold text-gray-600">Saldo</h3>
+        <p id="saldo" class="text-2xl font-bold text-blue-600">$20.23</p>
+      </div>
+    </div>
+
+    <div class="overflow-x-auto bg-white rounded-2xl shadow">
+      <table class="min-w-full text-sm text-gray-700 text-center">
+        <thead class="bg-gray-100 text-gray-600 uppercase text-xs">
+          <tr>
+            <th class="px-4 py-2">Date</th>
+            <th class="px-4 py-2">Profit</th>
+          </tr>
+        </thead>
+        <tbody id="reportBody"></tbody>
+      </table>
+    </div>
+
+    <footer class="mt-8 text-center text-gray-500 italic">
+      Saldo Awal: $20.23
+    </footer>
   </div>
+
+  <script>
+    const initialSaldo = 20.23;
+
+    document.addEventListener("DOMContentLoaded", () => {
+      loadData();
+      document.getElementById("profitInput").addEventListener("keypress", function(e) {
+        if (e.key === "Enter") {
+          addProfit();
+        }
+      });
+    });
+
+    function addProfit() {
+      const profitInput = document.getElementById("profitInput");
+      const profit = parseFloat(profitInput.value);
+      if (isNaN(profit)) return alert("Please enter a valid number");
+
+      const today = new Date().toLocaleDateString("en-US", { day: "2-digit", month: "short", year: "numeric" });
+      const entry = { date: today, profit: profit };
+
+      let data = JSON.parse(localStorage.getItem("profits")) || [];
+      data.push(entry);
+      localStorage.setItem("profits", JSON.stringify(data));
+
+      profitInput.value = "";
+      loadData();
+    }
+
+    function loadData() {
+      const reportBody = document.getElementById("reportBody");
+      const totalProfitEl = document.getElementById("totalProfit");
+      const saldoEl = document.getElementById("saldo");
+
+      reportBody.innerHTML = "";
+      let data = JSON.parse(localStorage.getItem("profits")) || [];
+
+      let totalProfit = 0;
+      data.forEach(item => {
+        totalProfit += item.profit;
+        let row = `<tr class='border-t text-center'><td class='px-4 py-2'>${item.date}</td><td class='px-4 py-2'>$${item.profit.toFixed(2)}</td></tr>`;
+        reportBody.innerHTML += row;
+      });
+
+      totalProfitEl.innerText = `$${totalProfit.toFixed(2)}`;
+      saldoEl.innerText = `$${(initialSaldo + totalProfit).toFixed(2)}`;
+    }
+  </script>
 </body>
 </html>
